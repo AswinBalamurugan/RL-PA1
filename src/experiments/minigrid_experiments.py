@@ -205,6 +205,7 @@ def run_minigrid_experiments():
         # Create results directory if it doesn't exist
         os.makedirs("results/MiniGrid", exist_ok=True)
         plt.savefig("results/MiniGrid/minigrid_comparison.png")
+        plt.close()  # Close the figure to prevent display
         
         return {
             'sarsa_df': minigrid_sarsa_df,

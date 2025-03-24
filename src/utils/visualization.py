@@ -1,5 +1,16 @@
-import matplotlib.pyplot as plt
 import os
+import matplotlib.pyplot as plt
+import scienceplots
+import seaborn as sns
+
+plt.style.use(['ieee','no-latex'])
+plt.rcParams['legend.fontsize'] = 12
+plt.rcParams['axes.labelsize'] = 15
+plt.rcParams['axes.titlesize'] = 20
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['figure.titlesize'] = 20
+sns.set_style('dark')
 
 def plot_results(results_df, env_name, agent_name):
     """
@@ -25,11 +36,10 @@ def plot_results(results_df, env_name, agent_name):
     plt.grid(True)
     
     # Create results directory if it doesn't exist
-    os.makedirs(f"results/{agent_name.replace(' ', '_')}/{env_name}", exist_ok=True)
-    
-    # Save plot with systematic naming
-    plot_path = f"results/{agent_name.replace(' ', '_')}/{env_name}/training_curve.png"
+    os.makedirs(f"results/{env_name}/individual", exist_ok=True)
+    plot_path = f"results/{env_name}/individual/{agent_name.lower().replace(' ', '_')}.png"
     plt.savefig(plot_path)
+    plt.close()
 
 def compare_algorithms(sarsa_df, qlearning_df, env_name):
     """
@@ -66,8 +76,9 @@ def compare_algorithms(sarsa_df, qlearning_df, env_name):
     plt.grid(True)
     
     # Create comparison directory if it doesn't exist
-    os.makedirs(f"results/Comparisons/{env_name}", exist_ok=True)
+    os.makedirs(f"results/{env_name}", exist_ok=True)
     
     # Save comparison plot
-    plot_path = f"results/Comparisons/{env_name}/sarsa_vs_qlearning.png"
-    plt.savefig(plot_path) 
+    plot_path = f"results/{env_name}/comparison.png"
+    plt.savefig(plot_path)
+    plt.close() 

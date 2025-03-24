@@ -1,7 +1,7 @@
 from tqdm import tqdm
 from .base import RLAgent
 import numpy as np
-import gym
+import gymnasium as gym
 
 class QLearningAgent(RLAgent):
     def __init__(self, env, learning_rate=0.1, discount_factor=0.99, temperature=1.0):

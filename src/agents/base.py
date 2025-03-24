@@ -100,7 +100,8 @@ class RLAgent:
             truncated = False
             
             while not (done or truncated):
-                action = self.epsilon_greedy_policy(state) if isinstance(self, SARSAAgent) else self.softmax_policy(state)
+                # Use epsilon_greedy_policy if epsilon exists, otherwise use softmax_policy
+                action = self.epsilon_greedy_policy(state) if hasattr(self, 'epsilon') else self.softmax_policy(state)
                 next_state, reward, done, truncated, _ = self.env.step(action)
                 episode_reward += reward
                 state = next_state
