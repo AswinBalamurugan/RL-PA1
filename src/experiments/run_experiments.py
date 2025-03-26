@@ -109,7 +109,7 @@ def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
     
     # Number of episodes for grid search and final training
     grid_search_episodes = 500
-    final_training_episodes = 1000
+    final_training_episodes = 5000
     
     print(f"Starting grid search for SARSA on {env_name}...")
     sarsa_results = grid_search(env_name, SARSAAgent, sarsa_param_grid, grid_search_episodes, max_steps, seeds, bins=bins, low=low, high=high)
