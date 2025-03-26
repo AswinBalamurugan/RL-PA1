@@ -41,15 +41,15 @@ def main():
     cartpole_results = run_complete_experiment('CartPole-v1', max_steps=500)
     cartpole_stats = analyze_results(cartpole_results, 'CartPole-v1')
     
-    # Run experiments for MountainCar-v0
-    print("\n=== Starting MountainCar-v0 Experiments ===")
-    mountaincar_results = run_complete_experiment('MountainCar-v0', max_steps=1000)
-    mountaincar_stats = analyze_results(mountaincar_results, 'MountainCar-v0')
+    # # Run experiments for MountainCar-v0
+    # print("\n=== Starting MountainCar-v0 Experiments ===")
+    # mountaincar_results = run_complete_experiment('MountainCar-v0', max_steps=1000)
+    # mountaincar_stats = analyze_results(mountaincar_results, 'MountainCar-v0')
     
-    # Run MiniGrid experiments (Bonus)
-    minigrid_results = run_minigrid_experiments()
-    if minigrid_results:
-        minigrid_stats = analyze_results(minigrid_results, 'MiniGrid-Dynamic-Obstacles-5x5-v0')
+    # # Run MiniGrid experiments (Bonus)
+    # minigrid_results = run_minigrid_experiments()
+    # if minigrid_results:
+    #     minigrid_stats = analyze_results(minigrid_results, 'MiniGrid-Dynamic-Obstacles-5x5-v0')
     
     print("\n=== Experiments Complete ===")
     print("Results saved in the results/ directory.")

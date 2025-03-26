@@ -19,7 +19,7 @@ class RLAgent:
             self.q_table = np.zeros((self.observation_space.n, self.action_space.n))
         else:
             # For continuous observation spaces, we'll discretize
-            self.bins = 10  # Number of bins for each dimension
+            self.bins = 30  # Number of bins for each dimension
             self.discrete_obs_size = [self.bins] * self.observation_space.shape[0]
             self.q_table = np.zeros((*self.discrete_obs_size, self.action_space.n))
     
@@ -35,9 +35,9 @@ class RLAgent:
                 
                 # Handle edge cases for infinity
                 if low == -np.inf:
-                    low = -10  # Arbitrary value
+                    low = -4  # Arbitrary value
                 if high == np.inf:
-                    high = 10  # Arbitrary value
+                    high = 4  # Arbitrary value
                 
                 scaled_val = int(self.bins * (o - low) / (high - low))
                 scaled_val = min(self.bins - 1, max(0, scaled_val))
