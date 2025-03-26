@@ -2,8 +2,8 @@ from tqdm import tqdm
 from .base import RLAgent
 
 class SARSAAgent(RLAgent):
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1):
-        super().__init__(env, learning_rate, discount_factor, epsilon)
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, bins=20, low=None, high=None):
+        super().__init__(env, learning_rate, discount_factor, epsilon, bins=bins, low_val=low, high_val=high)
     
     def train(self, num_episodes, max_steps):
         episode_rewards = []
@@ -38,8 +38,8 @@ class SARSAAgent(RLAgent):
         return episode_rewards
 
 class SARSAAgentWithShaping(SARSAAgent):
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, reward_shaping_fn=None):
-        super().__init__(env, learning_rate, discount_factor, epsilon)
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, reward_shaping_fn=None, bins=20, low=None, high=None):
+        super().__init__(env, learning_rate, discount_factor, epsilon, bins=bins, low=low, high=high)
         self.reward_shaping_fn = reward_shaping_fn
     
     def train(self, num_episodes, max_steps):

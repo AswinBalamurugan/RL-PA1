@@ -3,12 +3,15 @@ import gymnasium as gym
 from tqdm import tqdm
 
 class RLAgent:
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, temperature=1.0):
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, temperature=1.0, bins=20, low_val=-4, high_val=4):
         self.env = env
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.epsilon = epsilon
         self.temperature = temperature
+        self.bins = bins  
+        self.low = low_val
+        self.high = high_val
         
         # Initialize Q-table
         self.observation_space = env.observation_space
@@ -19,7 +22,6 @@ class RLAgent:
             self.q_table = np.zeros((self.observation_space.n, self.action_space.n))
         else:
             # For continuous observation spaces, we'll discretize
-            self.bins = 10  # Number of bins for each dimension
             self.discrete_obs_size = [self.bins] * self.observation_space.shape[0]
             self.q_table = np.zeros((*self.discrete_obs_size, self.action_space.n))
     
@@ -30,14 +32,14 @@ class RLAgent:
             # Scale observation to be between 0 and bins-1
             scaled_obs = []
             for i, o in enumerate(observation):
-                low = self.observation_space.low[i]
-                high = self.observation_space.high[i]
+                low = self.observation_space.low[i]/2
+                high = self.observation_space.high[i]/2
                 
                 # Handle edge cases for infinity
                 if low == -np.inf:
-                    low = -10  # Arbitrary value
+                    low = self.low 
                 if high == np.inf:
-                    high = 10  # Arbitrary value
+                    high = self.high  
                 
                 scaled_val = int(self.bins * (o - low) / (high - low))
                 scaled_val = min(self.bins - 1, max(0, scaled_val))

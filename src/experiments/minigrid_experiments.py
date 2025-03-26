@@ -10,7 +10,7 @@ from ..agents.base import RLAgent
 from collections import defaultdict
 
 class MiniGridRLAgent(RLAgent):
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, temperature=1.0):
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, temperature=1.0, bins=20, low=None, high=None):
         self.env = MiniGridWrapper(env)
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
@@ -29,10 +29,11 @@ class MiniGridRLAgent(RLAgent):
         return tuple(observation.flatten())
 
 class MiniGridSARSAAgent(MiniGridRLAgent):
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1):
-        super().__init__(env, learning_rate, discount_factor, epsilon)
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, epsilon=0.1, bins=20, low=None, high=None):
+        super().__init__(env, learning_rate, discount_factor, epsilon, bins=bins, low=low, high=high)
     
     def train(self, num_episodes, max_steps):
+        """Train the SARSA agent in the MiniGrid environment."""
         episode_rewards = []
         
         for episode in tqdm(range(num_episodes), desc="MiniGrid SARSA Training"):
@@ -102,7 +103,7 @@ class MiniGridQLearningAgent(MiniGridRLAgent):
         return episode_rewards
 
 def run_minigrid_experiments():
-    """Run experiments for MiniGrid environment"""
+    """Run experiments for the MiniGrid environment."""
     try:
         print("\n=== Starting MiniGrid-Dynamic-Obstacles-5x5-v0 Experiments (Bonus) ===")
         
@@ -116,7 +117,7 @@ def run_minigrid_experiments():
         minigrid_sarsa_params = {
             'learning_rate': 0.1,
             'discount_factor': 0.99,
-            'epsilon': 0.2
+            'epsilon': 0.1
         }
         
         minigrid_qlearning_params = {
@@ -127,7 +128,11 @@ def run_minigrid_experiments():
         
         # Number of episodes for training
         minigrid_episodes = 300
-        max_steps = 100
+        max_steps = 500
+        
+        # Initialize DataFrames to store results
+        minigrid_sarsa_df = None  # Initialize to None
+        minigrid_qlearning_df = None  # Initialize to None
         
         # Train SARSA agent
         print("Training SARSA agent on MiniGrid...")
@@ -136,14 +141,16 @@ def run_minigrid_experiments():
         for seed in seeds:
             np.random.seed(seed)
             env = gym.make('MiniGrid-Dynamic-Obstacles-5x5-v0')
-            agent = MiniGridSARSAAgent(
-                env,
-                learning_rate=minigrid_sarsa_params['learning_rate'],
-                discount_factor=minigrid_sarsa_params['discount_factor'],
-                epsilon=minigrid_sarsa_params['epsilon']
-            )
+            agent = MiniGridSARSAAgent(env, **minigrid_sarsa_params)
             rewards = agent.train(minigrid_episodes, max_steps)
             minigrid_sarsa_rewards.append(rewards)
+        
+        # Create DataFrame for SARSA results
+        minigrid_sarsa_df = pd.DataFrame({
+            'episode': range(1, minigrid_episodes + 1),
+            'reward': np.mean(minigrid_sarsa_rewards, axis=0),
+            'std': np.std(minigrid_sarsa_rewards, axis=0)
+        })
         
         # Train Q-Learning agent
         print("Training Q-Learning agent on MiniGrid...")
@@ -152,32 +159,20 @@ def run_minigrid_experiments():
         for seed in seeds:
             np.random.seed(seed)
             env = gym.make('MiniGrid-Dynamic-Obstacles-5x5-v0')
-            agent = MiniGridQLearningAgent(
-                env,
-                learning_rate=minigrid_qlearning_params['learning_rate'],
-                discount_factor=minigrid_qlearning_params['discount_factor'],
-                temperature=minigrid_qlearning_params['temperature']
-            )
+            agent = MiniGridQLearningAgent(env, **minigrid_qlearning_params)
             rewards = agent.train(minigrid_episodes, max_steps)
             minigrid_qlearning_rewards.append(rewards)
         
-        # Plot results
-        minigrid_sarsa_df = pd.DataFrame({
-            'episode': range(1, minigrid_episodes + 1),
-            'reward': np.mean(minigrid_sarsa_rewards, axis=0),
-            'std': np.std(minigrid_sarsa_rewards, axis=0)
-        })
-        
+        # Create DataFrame for Q-Learning results
         minigrid_qlearning_df = pd.DataFrame({
             'episode': range(1, minigrid_episodes + 1),
             'reward': np.mean(minigrid_qlearning_rewards, axis=0),
             'std': np.std(minigrid_qlearning_rewards, axis=0)
         })
         
-        # Plot comparison
+        # Plot results
         plt.figure(figsize=(12, 7))
-        plt.plot(minigrid_sarsa_df['episode'], minigrid_sarsa_df['reward'], 
-                label='SARSA Mean', color='blue')
+        plt.plot(minigrid_sarsa_df['episode'], minigrid_sarsa_df['reward'], label='SARSA Mean', color='blue')
         plt.fill_between(
             minigrid_sarsa_df['episode'],
             minigrid_sarsa_df['reward'] - minigrid_sarsa_df['std'],
@@ -186,8 +181,7 @@ def run_minigrid_experiments():
             color='blue'
         )
         
-        plt.plot(minigrid_qlearning_df['episode'], minigrid_qlearning_df['reward'], 
-                label='Q-Learning Mean', color='red')
+        plt.plot(minigrid_qlearning_df['episode'], minigrid_qlearning_df['reward'], label='Q-Learning Mean', color='red')
         plt.fill_between(
             minigrid_qlearning_df['episode'],
             minigrid_qlearning_df['reward'] - minigrid_qlearning_df['std'],
@@ -196,24 +190,18 @@ def run_minigrid_experiments():
             color='red'
         )
         
-        plt.title('SARSA vs Q-Learning in MiniGrid-Dynamic-Obstacles-5x5-v0')
-        plt.xlabel('Episode')
-        plt.ylabel('Reward')
+        plt.title("MiniGrid Experiment Results")
+        plt.xlabel("Episode")
+        plt.ylabel("Average Reward")
         plt.legend()
-        plt.grid(True)
-        
-        # Create results directory if it doesn't exist
-        os.makedirs("results/MiniGrid", exist_ok=True)
-        plt.savefig("results/MiniGrid/minigrid_comparison.png")
-        plt.close()  # Close the figure to prevent display
-        
-        return {
-            'sarsa_df': minigrid_sarsa_df,
-            'qlearning_df': minigrid_qlearning_df,
-            'sarsa_params': minigrid_sarsa_params,
-            'qlearning_params': minigrid_qlearning_params
-        }
+        plt.show()
         
     except Exception as e:
-        print(f"Could not run MiniGrid experiments: {e}")
-        return None 
+        print(f"An error occurred: {e}")
+        
+    return {
+        'sarsa_df': minigrid_sarsa_df,
+        'qlearning_df': minigrid_qlearning_df,
+        'sarsa_params': minigrid_sarsa_params,
+        'qlearning_params': minigrid_qlearning_params
+    } 
