@@ -96,20 +96,20 @@ def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
     
     # Define hyperparameter search grids
     sarsa_param_grid = {
-        'learning_rate': [0.01, 0.05, 0.1, 0.2],
+        'learning_rate': [0.01, 0.1, 0.2],
         'discount_factor': [discount_factor],
-        'epsilon': [0.01, 0.05, 0.1, 0.2, 0.3]
+        'epsilon': [0.01, 0.1, 0.2]
     }
     
     qlearning_param_grid = {
-        'learning_rate': [0.01, 0.05, 0.1, 0.2],
+        'learning_rate': [0.01, 0.1, 0.2],
         'discount_factor': [discount_factor],
-        'temperature': [0.1, 0.5, 1.0, 2.0, 5.0]
+        'temperature': [0.1, 1.0, 5.0]
     }
     
     # Number of episodes for grid search and final training
-    grid_search_episodes = 500
-    final_training_episodes = 5000
+    grid_search_episodes = 2500
+    final_training_episodes = 15000
     
     print(f"Starting grid search for SARSA on {env_name}...")
     sarsa_results = grid_search(env_name, SARSAAgent, sarsa_param_grid, grid_search_episodes, max_steps, seeds, bins=bins, low=low, high=high)
