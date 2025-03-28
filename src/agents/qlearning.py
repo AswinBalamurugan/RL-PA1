@@ -4,8 +4,8 @@ import numpy as np
 import gymnasium as gym
 
 class QLearningAgent(RLAgent):
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, temperature=1.0, bins=20, low=None, high=None):
-        super().__init__(env, learning_rate, discount_factor, temperature=temperature, bins=bins, low_val=low, high_val=high)
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, temperature=1.0, bins=20, low=None, high=None, scale_observations=False):
+        super().__init__(env, learning_rate, discount_factor, temperature=temperature, bins=bins, low_val=low, high_val=high, scale_observations=scale_observations)
     
     def train(self, num_episodes, max_steps):
         episode_rewards = []
@@ -44,8 +44,8 @@ class QLearningAgent(RLAgent):
         return episode_rewards
 
 class QLearningAgentWithShaping(QLearningAgent):
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, temperature=1.0, reward_shaping_fn=None, bins=20, low=None, high=None):
-        super().__init__(env, learning_rate, discount_factor, temperature, bins=bins, low=low, high=high)
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, temperature=1.0, reward_shaping_fn=None, bins=20, low=None, high=None, scale_observations=False):
+        super().__init__(env, learning_rate, discount_factor, temperature, bins=bins, low=low, high=high, scale_observations=scale_observations)
         self.reward_shaping_fn = reward_shaping_fn
     
     def train(self, num_episodes, max_steps):
