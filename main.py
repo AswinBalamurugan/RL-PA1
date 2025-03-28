@@ -37,14 +37,14 @@ def main():
     os.makedirs("results/Analysis", exist_ok=True)
     
     # Run experiments for CartPole-v1
-    print("=== Starting CartPole-v1 Experiments ===")
-    cartpole_results = run_complete_experiment('CartPole-v1', max_steps=500)
-    cartpole_stats = analyze_results(cartpole_results, 'CartPole-v1')
+    # print("=== Starting CartPole-v1 Experiments ===")
+    # cartpole_results = run_complete_experiment('CartPole-v1', max_steps=500)
+    # cartpole_stats = analyze_results(cartpole_results, 'CartPole-v1')
     
     # # Run experiments for MountainCar-v0
-    # print("\n=== Starting MountainCar-v0 Experiments ===")
-    # mountaincar_results = run_complete_experiment('MountainCar-v0', max_steps=1000)
-    # mountaincar_stats = analyze_results(mountaincar_results, 'MountainCar-v0')
+    print("\n=== Starting MountainCar-v0 Experiments ===")
+    mountaincar_results = run_complete_experiment('MountainCar-v0', max_steps=1000)
+    mountaincar_stats = analyze_results(mountaincar_results, 'MountainCar-v0')
     
     # # Run MiniGrid experiments (Bonus)
     # minigrid_results = run_minigrid_experiments()
