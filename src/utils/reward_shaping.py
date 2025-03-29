@@ -1,44 +1,56 @@
 import numpy as np
 
+
 def shape_reward_cartpole(state, reward, done):
     """
-    Custom reward shaping for CartPole-v1
-    
-    The goal is to keep the pole upright, so we can reshape the reward
-    to give higher values when the pole is more vertical.
+    Simplified reward shaping for CartPole-v1 focusing on:
+    - Position (x): Reward for staying centered
+    - Angle (theta): Reward for keeping pole upright
+    - Angular velocity (theta_dot): Penalty for fast rotation
     """
     x, x_dot, theta, theta_dot = state
-    
-    # Additional reward for keeping the pole upright
-    # theta is the angle, 0 means perfectly upright
-    upright_reward = np.cos(theta)
-    
-    # Penalize being far from the center
-    center_reward = -0.1 * abs(x)
-    
-    # Heavily penalize falling (done == True and reward == 0)
+
+    # Position reward: higher when cart is closer to center
+    position_reward = -0.1 * abs(x)
+
+    # Angle reward: higher when pole is more upright
+    angle_reward = np.cos(theta)  # Maximum (1.0) when perfectly upright
+
+    # Angular velocity reward: penalize fast rotation
+    angular_velocity_penalty = -0.1 * abs(theta_dot)
+
+    # Termination penalty
     if done and reward == 0:
-        return -10
-    
-    return reward + upright_reward + center_reward
+        return -5
+
+    return reward + position_reward + angle_reward + angular_velocity_penalty
+
 
 def shape_reward_mountaincar(state, reward, done):
     """
-    Custom reward shaping for MountainCar-v0
-    
-    The original reward is -1 for each timestep. We can add reward
-    based on the car's position and velocity to encourage progress.
+    Improved reward shaping for MountainCar-v0 focusing on energy maximization
+    and progress toward the goal.
     """
     position, velocity = state
-    
-    # Reward for height (position)
-    height_reward = 10 * position  # Higher position = better
-    
-    # Reward for moving in the right direction with positive velocity
-    velocity_reward = 5 * velocity if velocity > 0 else 0
-    
+
+    # Potential-based reward: higher positions are better
+    position_reward = 10 * (position + 1.2)  # Shifted to be positive
+
+    # Energy reward: reward for having more total energy (height + velocity)
+    # This is physically motivated by the task dynamics
+    energy_reward = 5 * (position + 0.5 * velocity**2)
+
+    # Progress reward: reward for moving right with high positive velocity
+    # and for moving left with high negative velocity when in left valley
+    if position < -0.5:
+        progress_reward = (
+            -5 * position * velocity
+        )  # Rewards left movement in left valley
+    else:
+        progress_reward = 5 * velocity  # Rewards right movement elsewhere
+
     # Large reward for reaching the goal
     if done and position >= 0.5:
         return 100
-    
-    return reward + height_reward + velocity_reward 
+
+    return reward + position_reward + energy_reward + progress_reward

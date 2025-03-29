@@ -130,6 +130,7 @@ def get_environment_parameters(env_name):
             "bins": 30,
             "low": -4,
             "high": 4,
+            "final_training_episodes": 15000,
             "sarsa_param_grid": {
                 "learning_rate": [0.2, 0.5, 1],
                 "discount_factor": [0.99],
@@ -142,33 +143,19 @@ def get_environment_parameters(env_name):
             },
         },
         "MountainCar-v0": {
-            "bins": 20,
-            "low": -10,
-            "high": 10,
+            "bins": 40,
+            "low": -1.2,
+            "high": 0.6,
+            "final_training_episodes": 10000,
             "sarsa_param_grid": {
-                "learning_rate": [0.01, 0.1, 0.5],
+                "learning_rate": [0.1, 0.5, 0.9],
                 "discount_factor": [0.99],
-                "epsilon": [1e-3, 0.01, 0.1],
+                "epsilon": [1e-2, 0.1, 1],
             },
             "qlearning_param_grid": {
-                "learning_rate": [0.1, 0.5, 1],
+                "learning_rate": [0.1, 0.5, 0.9],
                 "discount_factor": [0.99],
-                "temperature": [0.01, 0.1, 1],
-            },
-        },
-        "MiniGrid-Dynamic-Obstacles-5x5-v0": {
-            "bins": 15,
-            "low": 0,
-            "high": 10,
-            "sarsa_param_grid": {
-                "learning_rate": [0.01, 0.1, 0.2],
-                "discount_factor": [0.99],
-                "epsilon": [0.01, 0.1, 0.2],
-            },
-            "qlearning_param_grid": {
-                "learning_rate": [0.01, 0.1, 0.2],
-                "discount_factor": [0.99],
-                "temperature": [0.1, 0.5, 1.0],
+                "temperature": [1e-2, 0.1, 1],
             },
         },
     }
@@ -181,7 +168,7 @@ def get_environment_parameters(env_name):
             "sarsa_param_grid": {},
             "qlearning_param_grid": {},
         },
-    )  # Default values
+    )
 
 
 def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
@@ -194,6 +181,7 @@ def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
     bins = env_params["bins"]
     low = env_params["low"]
     high = env_params["high"]
+    final_training_episodes = env_params["final_training_episodes"]
 
     # Define hyperparameter search grids
     sarsa_param_grid = env_params["sarsa_param_grid"]
@@ -201,7 +189,6 @@ def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
 
     # Number of episodes for grid search and final training
     grid_search_episodes = 2500
-    final_training_episodes = 5000
 
     print(f"\nStarting grid search for SARSA on {env_name}...")
     sarsa_results = grid_search(
