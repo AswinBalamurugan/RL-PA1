@@ -1,0 +1,44 @@
+{
+  "os": "macOS-15.3.2-arm64-arm-64bit-Mach-O",
+  "python": "CPython 3.13.2",
+  "startedAt": "2025-03-30T17:07:01.302574Z",
+  "program": "/Users/aswin/Downloads/Courses/RL/Assignment-1/main.py",
+  "codePath": "main.py",
+  "git": {
+    "remote": "https://github.com/AswinBalamurugan/RL-PA1.git",
+    "commit": "6fff2ee39c2b0e10f5cddba680da3ab58fcb0e5d"
+  },
+  "email": "aswinbalamurugan21@gmail.com",
+  "root": "/Users/aswin/Downloads/Courses/RL/Assignment-1",
+  "host": "Aswins-MacBook-Air.local",
+  "executable": "/Users/aswin/miniconda3/envs/rl/bin/python",
+  "codePathLocal": "main.py",
+  "cpu_count": 8,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "245107195904",
+      "used": "198445965312"
+    },
+    "/System/Volumes/Data": {
+      "total": "245107195904",
+      "used": "198445965312"
+    }
+  },
+  "memory": {
+    "total": "8589934592"
+  },
+  "cpu": {
+    "count": 8,
+    "countLogical": 8
+  },
+  "apple": {
+    "name": "Apple M1",
+    "ecpuCores": 4,
+    "pcpuCores": 4,
+    "gpuCores": 7,
+    "memoryGb": 8,
+    "swapTotalBytes": "3221225472",
+    "ramTotalBytes": "8589934592"
+  }
+}

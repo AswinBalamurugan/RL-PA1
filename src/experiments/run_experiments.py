@@ -2,15 +2,15 @@ import numpy as np
 import gymnasium as gym
 import pandas as pd
 from tqdm import tqdm
-import wandb
 import os
-
-from src.agents.base import RLAgent
 
 from ..agents.sarsa import SARSAAgent, SARSAAgentWithShaping
 from ..agents.qlearning import QLearningAgent, QLearningAgentWithShaping
 from ..utils.reward_shaping import shape_reward_cartpole, shape_reward_mountaincar
 from ..utils.visualization import plot_results, compare_algorithms
+from ..utils.logging import setup_wandb, log_to_wandb
+
+Q_TABLES_BASE_DIR = os.path.join("src", "experiments", "q_tables")
 
 
 def set_seed(seed):
@@ -51,6 +51,9 @@ def run_experiment(
         # Train the agent and collect rewards
         episode_rewards = agent.train(num_episodes, max_steps)
 
+        # Log results to WandB
+        log_to_wandb(agent_class.__name__, env_name, hyperparams, episode_rewards, seed)
+
         # Create DataFrame for this run
         df = pd.DataFrame(
             {
@@ -67,6 +70,16 @@ def run_experiment(
             df[param] = value
 
         all_results.append(df)
+
+        # Save Q-table only for the final seed
+        if seed == seeds[-1]:
+            # Create the path for saving the Q-table
+            env_dir = os.path.join(Q_TABLES_BASE_DIR, env_name)
+            os.makedirs(env_dir, exist_ok=True)
+            agent_type = agent_class.__name__.lower()
+            filename = f"{agent_type}.npy"
+            path = os.path.join(env_dir, filename)
+            agent.save_q_table(path)
 
     return pd.concat(all_results, ignore_index=True)
 
@@ -127,14 +140,14 @@ def get_environment_parameters(env_name):
     env_params = {
         "CartPole-v1": {
             "scale_observations": True,
-            "bins": 30,
+            "bins": 20,
             "low": -4,
             "high": 4,
             "final_training_episodes": 15000,
             "sarsa_param_grid": {
                 "learning_rate": [0.2, 0.5, 1],
                 "discount_factor": [0.99],
-                "epsilon": [0.1, 0.2, 0.5],
+                "epsilon": [0.2, 0.5, 1],
             },
             "qlearning_param_grid": {
                 "learning_rate": [0.2, 0.5, 1],
@@ -146,29 +159,20 @@ def get_environment_parameters(env_name):
             "bins": 40,
             "low": -1.2,
             "high": 0.6,
-            "final_training_episodes": 10000,
+            "final_training_episodes": 15000,
             "sarsa_param_grid": {
                 "learning_rate": [0.1, 0.5, 0.9],
                 "discount_factor": [0.99],
-                "epsilon": [1e-2, 0.1, 1],
+                "epsilon": [0.2, 0.5, 1],
             },
             "qlearning_param_grid": {
                 "learning_rate": [0.1, 0.5, 0.9],
                 "discount_factor": [0.99],
-                "temperature": [1e-2, 0.1, 1],
+                "temperature": [1.0, 5.0, 10.0],
             },
         },
     }
-    return env_params.get(
-        env_name,
-        {
-            "bins": 20,
-            "low": None,
-            "high": None,
-            "sarsa_param_grid": {},
-            "qlearning_param_grid": {},
-        },
-    )
+    return env_params[env_name]
 
 
 def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
@@ -304,7 +308,6 @@ def run_complete_experiment(env_name, discount_factor=0.99, max_steps=1000):
 
     # Compare algorithms
     compare_algorithms(sarsa_df, qlearning_df, env_name)
-    compare_algorithms(sarsa_shaped_df, qlearning_shaped_df, env_name)
 
     # Return all dataframes and best parameters
     return {

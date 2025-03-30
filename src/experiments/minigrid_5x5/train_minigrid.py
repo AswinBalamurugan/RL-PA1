@@ -180,20 +180,6 @@ class QLearningAgent:
             episode_rewards.append(total_reward)
             episode_steps.append(step)
 
-            # # Print progress every 100 episodes
-            # if episode % 100 == 0:
-            #     avg_reward = sum(episode_rewards[-100:]) / min(
-            #         100, len(episode_rewards)
-            #     )
-            #     avg_steps = sum(episode_steps[-100:]) / min(100, len(episode_steps))
-            #     success_rate = success_count / min(100, episode + 1) * 100
-            #     success_count = 0  # Reset counter
-
-            #     # print(
-            #     #     f"Episode: {episode}, Avg Reward: {avg_reward:.2f}, Avg Steps: {avg_steps:.2f}, "
-            #     #     f"Success Rate: {success_rate:.1f}%, Exploration: {self.exploration_rate:.4f}"
-            #     # )
-
             # Save Q-table periodically
             if episode % 1000 == 0:
                 self.save_q_table(PATH_Q_TABLE_QLEARNING)

@@ -2,6 +2,8 @@ from tqdm import tqdm
 from .base import RLAgent
 import numpy as np
 import gymnasium as gym
+import os
+from collections import defaultdict
 
 
 class QLearningAgent(RLAgent):
@@ -27,8 +29,24 @@ class QLearningAgent(RLAgent):
             scale_observations=scale_observations,
         )
         self.initial_temperature = temperature  # Store initial temperature for decay
+        self.action_space = (
+            env.action_space.n
+        )  # Store the number of actions as an integer
+
+    def save_q_table(self, path):
+        """Save Q-table to file at the specified path including filename."""
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        np.save(path, self.q_table)
+
+    def load_q_table(self, path):
+        """Load Q-table from file."""
+        if os.path.exists(path):
+            self.q_table = np.load(path)
+            return True
+        return False
 
     def train(self, num_episodes, max_steps):
+        """Train the Q-learning agent."""
         episode_rewards = []
         temperature_decay_rate = 2 / num_episodes  # Calculate decay rate dynamically
 
@@ -99,6 +117,7 @@ class QLearningAgentWithShaping(QLearningAgent):
         self.reward_shaping_fn = reward_shaping_fn
 
     def train(self, num_episodes, max_steps):
+        """Train the Q-learning agent with reward shaping."""
         episode_rewards = []
         temperature_decay_rate = 2 / num_episodes  # Calculate decay rate dynamically
 

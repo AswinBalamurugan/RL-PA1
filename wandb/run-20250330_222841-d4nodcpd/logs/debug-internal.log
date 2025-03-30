@@ -1,0 +1,16 @@
+{"time":"2025-03-30T22:28:41.254458+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/aswin/Downloads/Courses/RL/Assignment-1/wandb/run-20250330_222841-d4nodcpd/logs/debug-core.log"}
+{"time":"2025-03-30T22:28:41.371385+05:30","level":"INFO","msg":"created new stream","id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:41.371429+05:30","level":"INFO","msg":"stream: started","id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:41.371515+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:41.371502+05:30","level":"INFO","msg":"sender: started","stream_id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:41.371588+05:30","level":"INFO","msg":"handler: started","stream_id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:41.774356+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-30T22:28:42.802373+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-30T22:28:42.802982+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-30T22:28:43.184932+05:30","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading wandb-metadata.json","runtime_seconds":0.100784416,"progress":"1.1KB/1.1KB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.053406916,"progress":"191B/191B"},{"desc":"uploading output.log","runtime_seconds":0.053394875}],"total_operations":3}}
+{"time":"2025-03-30T22:28:44.425103+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-30T22:28:45.265788+05:30","level":"INFO","msg":"stream: closing","id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:45.26582+05:30","level":"INFO","msg":"handler: closed","stream_id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:45.265842+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:45.265848+05:30","level":"INFO","msg":"sender: closed","stream_id":"d4nodcpd"}
+{"time":"2025-03-30T22:28:45.267553+05:30","level":"INFO","msg":"stream: closed","id":"d4nodcpd"}

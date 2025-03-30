@@ -1,0 +1,16 @@
+{"time":"2025-03-30T22:40:44.20689+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/aswin/Downloads/Courses/RL/Assignment-1/wandb/run-20250330_224044-y1nafr06/logs/debug-core.log"}
+{"time":"2025-03-30T22:40:44.322367+05:30","level":"INFO","msg":"created new stream","id":"y1nafr06"}
+{"time":"2025-03-30T22:40:44.32259+05:30","level":"INFO","msg":"stream: started","id":"y1nafr06"}
+{"time":"2025-03-30T22:40:44.322952+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"y1nafr06"}
+{"time":"2025-03-30T22:40:44.32268+05:30","level":"INFO","msg":"sender: started","stream_id":"y1nafr06"}
+{"time":"2025-03-30T22:40:44.322986+05:30","level":"INFO","msg":"handler: started","stream_id":"y1nafr06"}
+{"time":"2025-03-30T22:40:44.665664+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-30T22:40:45.941739+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-30T22:40:45.942092+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-30T22:40:46.207583+05:30","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"updating run config","runtime_seconds":0.264059333}],"total_operations":1}}
+{"time":"2025-03-30T22:40:47.056506+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-30T22:40:48.222333+05:30","level":"INFO","msg":"stream: closing","id":"y1nafr06"}
+{"time":"2025-03-30T22:40:48.222382+05:30","level":"INFO","msg":"handler: closed","stream_id":"y1nafr06"}
+{"time":"2025-03-30T22:40:48.222414+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"y1nafr06"}
+{"time":"2025-03-30T22:40:48.222421+05:30","level":"INFO","msg":"sender: closed","stream_id":"y1nafr06"}
+{"time":"2025-03-30T22:40:48.227286+05:30","level":"INFO","msg":"stream: closed","id":"y1nafr06"}

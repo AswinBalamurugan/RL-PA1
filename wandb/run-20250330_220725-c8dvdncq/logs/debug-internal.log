@@ -1,0 +1,16 @@
+{"time":"2025-03-30T22:07:25.602275+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/aswin/Downloads/Courses/RL/Assignment-1/wandb/run-20250330_220725-c8dvdncq/logs/debug-core.log"}
+{"time":"2025-03-30T22:07:25.710942+05:30","level":"INFO","msg":"created new stream","id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:25.710973+05:30","level":"INFO","msg":"stream: started","id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:25.710982+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:25.711008+05:30","level":"INFO","msg":"handler: started","stream_id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:25.711026+05:30","level":"INFO","msg":"sender: started","stream_id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:26.120477+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-30T22:07:27.153112+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-30T22:07:27.153489+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-30T22:07:27.984963+05:30","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading config.yaml","runtime_seconds":0.225199125,"progress":"528B/528B"}],"total_operations":1}}
+{"time":"2025-03-30T22:07:28.173557+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-30T22:07:29.206005+05:30","level":"INFO","msg":"stream: closing","id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:29.206063+05:30","level":"INFO","msg":"handler: closed","stream_id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:29.206101+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:29.206117+05:30","level":"INFO","msg":"sender: closed","stream_id":"c8dvdncq"}
+{"time":"2025-03-30T22:07:29.20833+05:30","level":"INFO","msg":"stream: closed","id":"c8dvdncq"}

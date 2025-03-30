@@ -1,6 +1,7 @@
 import numpy as np
 import gymnasium as gym
 from tqdm import tqdm
+from collections import defaultdict
 
 
 class RLAgent:
@@ -28,15 +29,15 @@ class RLAgent:
 
         # Initialize Q-table
         self.observation_space = env.observation_space
-        self.action_space = env.action_space
+        self.action_space = env.action_space.n  # Ensure action_space is an integer
 
         # If the observation space is discrete
         if isinstance(self.observation_space, gym.spaces.Discrete):
-            self.q_table = np.zeros((self.observation_space.n, self.action_space.n))
+            self.q_table = np.zeros((self.observation_space.n, self.action_space))
         else:
             # For continuous observation spaces, we'll discretize
             self.discrete_obs_size = [self.bins] * self.observation_space.shape[0]
-            self.q_table = np.zeros((*self.discrete_obs_size, self.action_space.n))
+            self.q_table = np.zeros((*self.discrete_obs_size, self.action_space))
 
     def discretize_observation(self, observation):
         if isinstance(self.observation_space, gym.spaces.Discrete):
@@ -67,16 +68,16 @@ class RLAgent:
     def get_q_value(self, state, action):
         state_disc = self.discretize_observation(state)
         if isinstance(self.observation_space, gym.spaces.Discrete):
-            return self.q_table[state_disc, action]
+            return self.q_table[state_disc][action]
         else:
-            return self.q_table[(*state_disc, action)]
+            return self.q_table[state_disc][action]
 
     def set_q_value(self, state, action, value):
         state_disc = self.discretize_observation(state)
         if isinstance(self.observation_space, gym.spaces.Discrete):
-            self.q_table[state_disc, action] = value
+            self.q_table[state_disc][action] = value
         else:
-            self.q_table[(*state_disc, action)] = value
+            self.q_table[state_disc][action] = value
 
     def epsilon_greedy_policy(self, state):
         if np.random.random() < self.epsilon:
@@ -84,17 +85,17 @@ class RLAgent:
         else:
             state_disc = self.discretize_observation(state)
             if isinstance(self.observation_space, gym.spaces.Discrete):
-                return np.argmax(self.q_table[state_disc, :])
+                return np.argmax(self.q_table[state_disc])
             else:
-                return np.argmax(self.q_table[(*state_disc,)])
+                return np.argmax(self.q_table[state_disc])
 
     def softmax_policy(self, state):
         state_disc = self.discretize_observation(state)
 
         if isinstance(self.observation_space, gym.spaces.Discrete):
-            q_values = self.q_table[state_disc, :]
+            q_values = self.q_table[state_disc]
         else:
-            q_values = self.q_table[(*state_disc,)]
+            q_values = self.q_table[state_disc]
 
         # Apply softmax with temperature
         # Normalize q_values to avoid overflow/underflow
@@ -105,7 +106,7 @@ class RLAgent:
         )  # Add small epsilon to prevent division by zero
 
         # Choose action based on probabilities
-        return np.random.choice(self.action_space.n, p=probabilities)
+        return np.random.choice(self.action_space, p=probabilities)
 
     def train(self, num_episodes, max_steps):
         # To be implemented by subclasses

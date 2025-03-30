@@ -1,0 +1,16 @@
+{"time":"2025-03-30T22:55:17.833314+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/aswin/Downloads/Courses/RL/Assignment-1/wandb/run-20250330_225517-h1zngowl/logs/debug-core.log"}
+{"time":"2025-03-30T22:55:17.954587+05:30","level":"INFO","msg":"created new stream","id":"h1zngowl"}
+{"time":"2025-03-30T22:55:17.954713+05:30","level":"INFO","msg":"stream: started","id":"h1zngowl"}
+{"time":"2025-03-30T22:55:17.954839+05:30","level":"INFO","msg":"sender: started","stream_id":"h1zngowl"}
+{"time":"2025-03-30T22:55:17.954968+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"h1zngowl"}
+{"time":"2025-03-30T22:55:17.954994+05:30","level":"INFO","msg":"handler: started","stream_id":"h1zngowl"}
+{"time":"2025-03-30T22:55:18.35438+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-30T22:55:19.377958+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-30T22:55:19.37834+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-30T22:55:19.703349+05:30","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading wandb-metadata.json","runtime_seconds":0.254101542,"progress":"1.1KB/1.1KB"},{"desc":"uploading output.log","runtime_seconds":0.011275042},{"desc":"uploading wandb-summary.json","runtime_seconds":0.011259875,"progress":"205B/205B"}],"total_operations":3}}
+{"time":"2025-03-30T22:55:20.375703+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-30T22:55:22.139652+05:30","level":"INFO","msg":"stream: closing","id":"h1zngowl"}
+{"time":"2025-03-30T22:55:22.139687+05:30","level":"INFO","msg":"handler: closed","stream_id":"h1zngowl"}
+{"time":"2025-03-30T22:55:22.139708+05:30","level":"INFO","msg":"sender: closed","stream_id":"h1zngowl"}
+{"time":"2025-03-30T22:55:22.139706+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"h1zngowl"}
+{"time":"2025-03-30T22:55:22.142111+05:30","level":"INFO","msg":"stream: closed","id":"h1zngowl"}

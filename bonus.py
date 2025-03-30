@@ -9,6 +9,7 @@ import gymnasium as gym
 from minigrid.wrappers import FullyObsWrapper
 from src.utils.visualization import plot_results, compare_algorithms
 from collections import defaultdict
+from src.utils.logging import log_to_wandb
 
 SEEDS = [42, 123, 456, 789, 1024]
 
@@ -35,7 +36,7 @@ def bonus():
             np.random.seed(seed)
             random.seed(seed)
 
-            # Initialize agents
+            # Initialize agents with hyperparameters
             q_learning_agent = QLearningAgent(
                 action_space=3,
                 learning_rate=0.1,
@@ -54,26 +55,54 @@ def bonus():
             )
 
             # Train Q-Learning agent
-            # print("\n=== Training Q-Learning Agent ===")
             training_env = gym.make("MiniGrid-Dynamic-Obstacles-5x5-v0")
             training_env = FullyObsWrapper(training_env)
             q_rewards, _ = q_learning_agent.train(
                 training_env, episodes=10000, max_steps=100
             )
             training_env.close()
-            q_learning_agent.save_q_table(PATH_Q_TABLE_QLEARNING)
-            # print("Q-Learning training complete. Q-table saved.")
+            if seed == SEEDS[-1]:  # Only save Q-table for the last seed
+                q_learning_agent.save_q_table(PATH_Q_TABLE_QLEARNING)
+
+            # Log Q-Learning results to WandB
+            log_to_wandb(
+                "Q-Learning",
+                "MiniGrid-Dynamic-Obstacles-5x5-v0",
+                {
+                    "learning_rate": 0.1,
+                    "discount_factor": 0.99,
+                    "exploration_rate": 1.0,
+                    "exploration_decay": 0.995,
+                    "min_exploration_rate": 0.01,
+                },
+                q_rewards,
+                seed,
+            )
 
             # Train SARSA agent
-            # print("\n=== Training SARSA Agent ===")
             training_env = gym.make("MiniGrid-Dynamic-Obstacles-5x5-v0")
             training_env = FullyObsWrapper(training_env)
             sarsa_rewards, _ = sarsa_agent.train(
                 training_env, episodes=10000, max_steps=100
             )
             training_env.close()
-            sarsa_agent.save_q_table(PATH_Q_TABLE_SARSA)
-            # print("SARSA training complete. Q-table saved.")
+            if seed == SEEDS[-1]:  # Only save Q-table for the last seed
+                sarsa_agent.save_q_table(PATH_Q_TABLE_SARSA)
+
+            # Log SARSA results to WandB
+            log_to_wandb(
+                "SARSA",
+                "MiniGrid-Dynamic-Obstacles-5x5-v0",
+                {
+                    "learning_rate": 0.1,
+                    "discount_factor": 0.99,
+                    "epsilon": 1.0,
+                    "epsilon_decay": 0.995,
+                    "min_epsilon": 0.01,
+                },
+                sarsa_rewards,
+                seed,
+            )
 
             # Store results for this seed
             all_q_rewards.append(q_rewards)
@@ -98,7 +127,7 @@ def bonus():
         q_learning_agent = QLearningAgent(
             action_space=3,
             learning_rate=0.1,
-            discount_factor=0.95,
+            discount_factor=0.99,
             exploration_rate=1.0,
             exploration_decay=0.995,
             min_exploration_rate=0.01,
@@ -112,7 +141,7 @@ def bonus():
         sarsa_agent = SARSAAgent(
             action_space=3,
             learning_rate=0.1,
-            discount_factor=0.95,
+            discount_factor=0.99,
             epsilon=1.0,
             epsilon_decay=0.995,
             min_epsilon=0.01,

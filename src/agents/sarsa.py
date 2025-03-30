@@ -1,5 +1,9 @@
 from tqdm import tqdm
 from .base import RLAgent
+import os
+import numpy as np
+from collections import defaultdict
+import gym
 
 
 class SARSAAgent(RLAgent):
@@ -25,6 +29,21 @@ class SARSAAgent(RLAgent):
             scale_observations=scale_observations,
         )
         self.initial_epsilon = epsilon  # Store initial epsilon for decay
+        self.action_space = (
+            env.action_space.n
+        )  # Store the number of actions as an integer
+
+    def save_q_table(self, path):
+        """Save Q-table to file at the specified path including filename."""
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        np.save(path, self.q_table)
+
+    def load_q_table(self, path):
+        """Load Q-table from file."""
+        if os.path.exists(path):
+            self.q_table = np.load(path)
+            return True
+        return False
 
     def train(self, num_episodes, max_steps):
         episode_rewards = []

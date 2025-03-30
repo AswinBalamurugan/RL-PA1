@@ -1,0 +1,16 @@
+{"time":"2025-03-30T22:03:55.028073+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/aswin/Downloads/Courses/RL/Assignment-1/wandb/run-20250330_220355-lmti8bm2/logs/debug-core.log"}
+{"time":"2025-03-30T22:03:55.241466+05:30","level":"INFO","msg":"created new stream","id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:55.241683+05:30","level":"INFO","msg":"stream: started","id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:55.241866+05:30","level":"INFO","msg":"handler: started","stream_id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:55.241951+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:55.242179+05:30","level":"INFO","msg":"sender: started","stream_id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:55.696149+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-30T22:03:56.750191+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-30T22:03:56.750611+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-30T22:03:57.571829+05:30","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.503989541},{"desc":"uploading config.yaml","runtime_seconds":0.166956042,"progress":"528B/528B"}],"total_operations":2}}
+{"time":"2025-03-30T22:03:57.766323+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-30T22:03:58.787793+05:30","level":"INFO","msg":"stream: closing","id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:58.787859+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:58.787902+05:30","level":"INFO","msg":"sender: closed","stream_id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:58.788218+05:30","level":"INFO","msg":"handler: closed","stream_id":"lmti8bm2"}
+{"time":"2025-03-30T22:03:58.788957+05:30","level":"INFO","msg":"stream: closed","id":"lmti8bm2"}
